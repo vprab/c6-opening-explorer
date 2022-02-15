@@ -7,10 +7,15 @@ class Move:
         if move == "_end_":
             self.indmoves = [move]
         else:
-            self.indmoves = re.split("(\w\d+)", move)[1::2]
+            self.indmoves = list(map(self.standardize_individual_move, re.split("(\w\d+)", move)[1::2]))
 
     def is_end(self):
         return self.indmoves == ["_end_"]
+
+    @staticmethod
+    def standardize_individual_move(m):
+        x, y = m[0], int(m[1:])
+        return "{}{}".format(x, y)
 
     @staticmethod
     def rotate_individual_move_90(m):
